@@ -2,8 +2,7 @@
 * npm i
 * npm i -g tsd typescript
 * tsd reinstall -overwrite
-* Add IterableIterator interface in ./typings/node/node.d.ts if not added
-    - 459: interface IterableIterator&lt;T&gt; {}
+* Apply manually [fix](https://github.com/DefinitelyTyped/DefinitelyTyped/commit/2966b1b8bad3b515b8ebeaaf40d95809a46e74a8), if missing in ./typings/node/node.d.ts
 
 ## Tasks
 **Visual Studio Code tasks**
