@@ -43,6 +43,17 @@ Tasks
         - "--env=prod"
         - "--configuration=development"
 * **test** - Run unit tests for client and server applications
-* **test-server** - Run unit tests for client application
-* **test-client** - Run unit tests for server application
+* **test-client** - Run unit tests for client application
+* **test-server** - Run unit tests for server application
 * **run-server** - Run application
+
+**NPM tasks**
+
+* **start"** - Run application
+* **dev** - Build client and server applications for development environment
+* **prod** - Build client and server applications for production environment
+* **test** - Run unit tests for client and server applications
+
+## TODO
+* [React Hot Loader](https://github.com/gaearon/react-hot-loader)
+* [Isomorphic React app](http://jmfurlott.com/tutorial-setting-up-a-simple-isomorphic-react-app/)
