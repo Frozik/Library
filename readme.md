@@ -3,7 +3,7 @@
 * npm i -g tsd typescript
 * tsd reinstall -overwrite
 * Add IterableIterator interface in ./typings/node/node.d.ts if not added
-    - 459: interface IterableIterator<T> {}
+    - 459: interface IterableIterator&lt;T&gt; {}
 
 ## Tasks
 **Visual Studio Code tasks**
@@ -16,6 +16,7 @@
 * test-server - Run unit tests for server application
 
 **Gulp tasks**
+
 Running gulp task
 * "gulp" - If installed globbaly
 * "node ./node_modules/gulp/bin/gulp.js" if installed locally only
