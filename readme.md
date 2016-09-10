@@ -1,8 +1,11 @@
 ## Installation
-* npm i
-* npm i -g tsd typescript
-* tsd reinstall -overwrite
-* Apply manually [fix](https://github.com/DefinitelyTyped/DefinitelyTyped/commit/2966b1b8bad3b515b8ebeaaf40d95809a46e74a8), if missing in ./typings/node/node.d.ts
+* Install [Visual Studio Code](https://code.visualstudio.com/)
+* Install dependency packages
+    - npm i
+    - npm i -g tsd typescript
+* Install Typescript type definisions
+    - tsd install -overwrite
+    - If [fix](https://github.com/DefinitelyTyped/DefinitelyTyped/commit/2966b1b8bad3b515b8ebeaaf40d95809a46e74a8) is still missing, apply it manually to  ./typings/node/node.d.ts
 
 ## Tasks
 **Visual Studio Code tasks**
