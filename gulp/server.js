@@ -16,7 +16,7 @@ module.exports = function (settings) {
         sourceMap: settings.sourceMap
     }));
     plugins.push(new CopyWebpackPlugin([
-        { from: './server/views', to: path.resolve(__dirname, 'wwwroot/views') },
+        { from: './server/views', to: path.resolve(__dirname, '../views') },
     ]));
 
     const nodeModules = {};
