@@ -8,11 +8,9 @@
 ## Tasks
 **Visual Studio Code tasks**
 * build-css-definisions - Builds definisions (*.d.ts) for CSS files, configured for 
-
 * build - Build client and server applications (development environment)
 * build-client - Build client application (development environment)
 * build-server - Build server application (development environment)
-
 * test - Run unit tests for client and server applications
 * test-client - Run unit tests for client application
 * test-server - Run unit tests for server application
@@ -41,9 +39,7 @@ Tasks
     - Example of process arguments:
         - "--env=prod"
         - "--configuration=development"
-
 * test - Run unit tests for client and server applications
 * test-server - Run unit tests for client application
 * test-client - Run unit tests for server application
-
 * run-server - Run application
