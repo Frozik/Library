@@ -1,0 +1,45 @@
+// Available variables which can be used inside of strings.
+// ${workspaceRoot}: the root folder of the team
+// ${file}: the current opened file
+// ${fileBasename}: the current opened file's basename
+// ${fileDirname}: the current opened file's dirname
+// ${fileExtname}: the current opened file's extension
+// ${cwd}: the current working directory of the spawned process
+
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug in Chrome",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:3000",
+            "userDataDir": "${workspaceRoot}/.vscode/chrome",
+            "sourceMaps": true,
+            "webRoot": "${workspaceRoot}",
+            "sourceRoot": "${workspaceRoot}/client",
+            "preLaunchTask": "build-client",
+            "diagnosticLogging": true
+        },
+        {
+			"name": "Debug Application",
+			"type": "node",
+			"request": "launch",
+			"program": "${workspaceRoot}/wwwroot/server.js",
+            "sourceRoot": "${workspaceRoot}/server",
+			"stopOnEntry": true,
+			"args": [],
+			"cwd": "${workspaceRoot}",
+			"preLaunchTask": "build-server",
+			"runtimeExecutable": null,
+			"runtimeArgs": [
+				"--nolazy"
+			],
+			"env": {
+				"NODE_ENV": "development"
+			},
+			"sourceMaps": true,
+			"outDir": "${workspaceRoot}/wwwroot"
+		}
+    ]
+}

@@ -1,0 +1,6 @@
+!/.vscode/chrome
+/.vscode/chrome/*
+!/node_modules
+/node_modules/*
+!/typings
+/typings*

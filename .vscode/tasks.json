@@ -1,0 +1,39 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "0.1.0",
+    "command": "node",
+    "isShellCommand": true,
+    "suppressTaskName": true,
+    "showOutput": "always",
+    "tasks": [
+        {
+            "taskName": "build-css-definisions",
+            "args": ["./node_modules/typed-css-modules/lib/cli.js", "client"]
+        },
+        { 
+            "taskName": "build",
+            "args": ["./node_modules/gulp/bin/gulp.js", "build"]
+        },
+        { 
+            "taskName": "build-client",
+            "args": ["./node_modules/gulp/bin/gulp.js", "build-client"]
+        },
+        { 
+            "taskName": "build-server",
+            "args": ["./node_modules/gulp/bin/gulp.js", "build-server"]
+        },
+        { 
+            "taskName": "test",
+            "args": ["./node_modules/gulp/bin/gulp.js", "test"]
+        },
+        { 
+            "taskName": "test-client",
+            "args": ["./node_modules/gulp/bin/gulp.js", "test-client"]
+        },
+        { 
+            "taskName": "test-server",
+            "args": ["./node_modules/gulp/bin/gulp.js", "test-server"]
+        }
+    ]
+}
