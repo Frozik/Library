@@ -2,10 +2,10 @@ const path = require('path');
 
 module.exports = function(config) {
     config.set({
-        browsers: ['PhantomJS'],
+        browsers: ['Chrome'/*'PhantomJS'*/],
         
         files: [
-            './../client/**/*.spec.ts?',
+            './../client/**/*.spec.ts*',
         ],
 
         frameworks: ['mocha', 'chai'],
