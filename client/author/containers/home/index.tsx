@@ -2,13 +2,11 @@ import * as React from "react";
 
 import RichEditor from "./../../../common/components/rich-editor";
 
-export interface IAuthorHomeState {}
+interface IAuthorHomeState {}
 
-export interface IAuthorHomeProps {}
+interface IAuthorHomeProps {}
 
-export class AuthorHome extends React.Component<IAuthorHomeState, IAuthorHomeProps> {
-    public state: IAuthorHomeState;
-
+export default class AuthorHome extends React.Component<IAuthorHomeProps, IAuthorHomeState> {
     constructor(props: IAuthorHomeProps) {
         super(props);
 
