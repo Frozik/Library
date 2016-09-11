@@ -4,7 +4,7 @@ import ElementHelper from "./../element-helper";
 
 describe("ElementHelper", () => {
     describe("getElementRect", () => {
-        it("Correctly checks element rect", () => {
+        it("Checks element rect", () => {
             const testElement = document.createElement("div");
             testElement.style.position = "absolute";
             testElement.style.left = "100px";
@@ -31,7 +31,7 @@ describe("ElementHelper", () => {
             expect(boundingBox).to.eql(expectedBoundingBox);
         });
 
-        it("Correctly checks nested element rect", () => {
+        it("Checks nested element rect", () => {
             const containerElement = document.createElement("div");
             containerElement.style.position = "absolute";
             containerElement.style.left = "3px";
@@ -71,4 +71,48 @@ describe("ElementHelper", () => {
             expect(ElementHelper.getElementRect).to.throw(Error);
         });
     });
+
+    describe("isWithinContainer", () => {
+        it("Checks elements inside container", () => {
+            const containerElement = document.createElement("div");
+            const testElement1 = document.createElement("div");
+            const testElement2 = document.createElement("div");
+
+
+            containerElement.appendChild(testElement1);
+            containerElement.appendChild(testElement2);
+
+            document.body.appendChild(containerElement);
+
+            const isWithinContainer = ElementHelper.isWithinContainer(containerElement, testElement1, testElement2);
+
+            document.body.removeChild(containerElement);
+
+            expect(isWithinContainer).to.be.true;
+        });
+
+        it("Checks one outside container", () => {
+            const containerElement = document.createElement("div");
+            const testElement1 = document.createElement("div");
+            const testElement2 = document.createElement("div");
+
+
+            containerElement.appendChild(testElement1);
+
+            document.body.appendChild(containerElement);
+            document.body.appendChild(testElement2);
+
+            const isWithinContainer = ElementHelper.isWithinContainer(containerElement, testElement1, testElement2);
+
+            document.body.removeChild(containerElement);
+            document.body.removeChild(testElement2);
+
+            expect(isWithinContainer).to.be.false;
+        });
+
+        it("Fail in case of null parameter", () => {
+            expect(ElementHelper.isWithinContainer).to.throw(Error);
+        });
+    });
+
 });

@@ -1,15 +1,15 @@
-import { Editor, EditorState } from "draft-js";
+import { Editor, EditorState, getVisibleSelectionRect } from "draft-js";
 import * as React from "react";
+import { findDOMNode } from "react-dom";
+
+import ElementHelper from "./../../helpers/element-helper";
 
 import { editor } from "./index.css";
 
-interface IToolbarState {
-    show: boolean;
-}
-
 interface IRichEditorState {
     editorState?: EditorState;
-    inlineToolbar?: IToolbarState;
+    blockRect?: ClientRect;
+    selectionRect?: ClientRect;
 }
 
 export interface IRichEditorProps {}
@@ -20,9 +20,6 @@ export class RichEditor extends React.Component<IRichEditorProps, IRichEditorSta
 
         this.state = {
             editorState: EditorState.createEmpty(),
-            inlineToolbar: {
-                show: false,
-            }
         };
     }
 
@@ -41,6 +38,48 @@ export class RichEditor extends React.Component<IRichEditorProps, IRichEditorSta
     }
 
     protected editorStateChanged(editorState: EditorState) {
-        this.setState({ editorState });
+        this.setState({
+            editorState,
+            blockRect: this.getEditBlockNodeRect(editorState),
+            selectionRect: this.getSelectionRect(editorState),
+        });
+    }
+
+    protected getEditBlockNodeRect(editorState: EditorState): ClientRect {
+        const componentRootNode =  findDOMNode(this);
+
+        if (!componentRootNode) {
+            return null;
+        }
+
+        const { anchorNode, focusNode } = window.getSelection();
+
+        if (!anchorNode || !focusNode) {
+            return null;
+        }
+
+        if (!ElementHelper.isWithinContainer(componentRootNode, anchorNode, focusNode)) {
+            return null;
+        }
+
+        const selectionElement = editorState.getSelection().getIsBackward() ? focusNode : anchorNode;
+
+        let iterator: Node | Element = selectionElement;
+
+        while (iterator && (!(iterator instanceof Element) || !iterator.getAttribute("data-block"))) {
+            iterator = iterator.parentNode;
+        }
+
+        const blockElement = iterator instanceof Element ? iterator : null;
+
+        if (!blockElement) {
+            return null;
+        }
+
+        return ElementHelper.getElementRect(blockElement);
+    }
+
+    protected getSelectionRect(editorState: EditorState): ClientRect {
+        return !editorState.getSelection().isCollapsed() ? getVisibleSelectionRect(window) : null;
     }
 }
