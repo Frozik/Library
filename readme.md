@@ -4,7 +4,7 @@
     - npm i
     - npm i -g tsd typescript
 * Install Typescript type definisions
-    - tsd install -overwrite
+    - tsd install -o
     - If [fix](https://github.com/DefinitelyTyped/DefinitelyTyped/commit/2966b1b8bad3b515b8ebeaaf40d95809a46e74a8) is still missing, apply it manually to  *./typings/node/node.d.ts*
 
 ## Tasks
@@ -57,3 +57,4 @@ Tasks
 ## TODO
 * [React Hot Loader](https://github.com/gaearon/react-hot-loader)
 * [Isomorphic React app](http://jmfurlott.com/tutorial-setting-up-a-simple-isomorphic-react-app/)
+* [Coverage](https://github.com/karma-runner/karma-coverage)
