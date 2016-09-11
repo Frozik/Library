@@ -4,6 +4,7 @@ const gulp = require('gulp');
 const gulpWebpack = require('gulp-webpack');
 
 const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = function (settings) {
@@ -23,6 +24,18 @@ module.exports = function (settings) {
     plugins.push(new webpack.DefinePlugin({
         'process.env': { NODE_ENV: JSON.stringify(settings.environment) }
     }));
+    plugins.push(new CopyWebpackPlugin([
+        {
+            context: path.resolve(__dirname, './../node_modules/react-mdl/extra'),
+            from: '*.min.css*',
+            to: path.resolve(__dirname, '../css')
+        },
+        {
+            context: path.resolve(__dirname, './../node_modules/react-mdl/extra'),
+            from: '*.min.js*',
+            to: path.resolve(__dirname, '../js')
+        },
+    ]));
 
     gulp.task(taskName, () => gulp.src('./client/application.ts').
         pipe(gulpWebpack({
@@ -37,8 +50,8 @@ module.exports = function (settings) {
                     'normalizr',
                     'i18next',
                     'redux', 'redux-thunk',
-                    'react', 'react-dom', 'react-router', 'react-redux', 'react-addons-update',
-                    'draft-js'
+                    'react', 'react-dom', 'react-router', 'react-redux', 'react-addons-update', 'react-mdl',
+                    'draft-js',
                 ]
             },
 

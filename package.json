@@ -4,6 +4,7 @@
   "description": "Publishing house",
   "main": "index.js",
   "scripts": {
+    "css-types": "node ./node_modules/typed-css-modules/lib/cli.js client",
     "start": "node ./node_modules/gulp/bin/gulp.js run-server",
     "dev": "node ./node_modules/gulp/bin/gulp.js build --environment=development",
     "prod": "node ./node_modules/gulp/bin/gulp.js build --environment=production",
@@ -23,6 +24,7 @@
     "react": "^15.3.1",
     "react-addons-update": "^15.3.1",
     "react-dom": "^15.3.1",
+    "react-mdl": "^1.7.1",
     "react-redux": "^4.4.5",
     "react-router": "^2.8.0",
     "redux": "^3.6.0",

@@ -1,11 +1,27 @@
 :local .editor {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 960px;
-    margin: 50px auto;
-    padding: 25px;
+    min-width: 600px;
+    margin: 20px;
+    background: rgba(245, 245, 245, 1);
+    padding: 20px;
     font-size: 18px;
+}
+
+:local .selectionToolbar {
+    position: absolute;
+    z-index: 9999;
+    cursor: default;
+    background: rgba(224, 224, 224, 1);
+}
+
+:local .toolbarButton {
+    margin: 5px;
+    background: rgba(238, 238, 238, 1);
+}
+
+:local .toolbarButton:not(:first-child) {
+    margin-left: 0;
+}
+
+:local .selectedToolbarButton {
+    background: rgba(144, 202, 249, 1);
 }

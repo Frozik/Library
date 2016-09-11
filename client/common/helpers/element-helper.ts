@@ -20,7 +20,7 @@ export default class ElementHelper {
     public static isWithinContainer(container: Node, ...checkNodes: Array<Node>): boolean {
         if (!container || checkNodes.length <= 0) {
             throw new Error("'container' or 'checkNodes' are not set");
-        } 
+        }
 
         let cachedParentNode: Node = null;
 

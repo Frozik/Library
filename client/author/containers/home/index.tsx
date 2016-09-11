@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { RichEditor } from "./../../../common/components/rich-editor";
+import RichEditor from "./../../../common/components/rich-editor";
 
 export interface IAuthorHomeState {}
 

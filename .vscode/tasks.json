@@ -8,7 +8,7 @@
     "showOutput": "always",
     "tasks": [
         {
-            "taskName": "build-css-definisions",
+            "taskName": "css-types",
             "args": ["./node_modules/typed-css-modules/lib/cli.js", "client"]
         },
         { 

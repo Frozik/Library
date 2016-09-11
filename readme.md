@@ -1,5 +1,6 @@
 ## Installation
 * Install [Visual Studio Code](https://code.visualstudio.com/)
+    - Configured debugging for client and server code
 * Install dependency packages
     - npm i
     - npm i -g tsd typescript
@@ -9,7 +10,7 @@
 
 ## Tasks
 **Visual Studio Code tasks**
-* **build-css-definisions** - Builds definisions (*.d.ts) for CSS files, configured for 
+* **css-types** - Builds definisions (*.d.ts) for CSS files 
 * **build** - Build client and server applications (development environment)
 * **build-client** - Build client application (development environment)
 * **build-server** - Build server application (development environment)
@@ -50,6 +51,7 @@ Tasks
 **NPM tasks**
 
 * **start"** - Run application
+* **css-types** - Builds definisions (*.d.ts) for CSS files 
 * **dev** - Build client and server applications for development environment
 * **prod** - Build client and server applications for production environment
 * **test** - Run unit tests for client and server applications
