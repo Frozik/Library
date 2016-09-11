@@ -1,7 +1,9 @@
+@import './../../index.css';
+
 :local .editor {
     min-width: 600px;
     margin: 20px;
-    background: rgba(245, 245, 245, 1);
+    background: $color_grey_50;
     padding: 20px;
     font-size: 18px;
 }
@@ -10,12 +12,12 @@
     position: absolute;
     z-index: 9999;
     cursor: default;
-    background: rgba(224, 224, 224, 1);
+    background: $color_grey_300;
 }
 
 :local .toolbarButton {
     margin: 5px;
-    background: rgba(238, 238, 238, 1);
+    background: $color_grey_200;
 }
 
 :local .toolbarButton:not(:first-child) {
@@ -23,5 +25,5 @@
 }
 
 :local .selectedToolbarButton {
-    background: rgba(144, 202, 249, 1);
+    background: $color_blue_grey_200;
 }

@@ -88,7 +88,9 @@ module.exports = function (settings) {
 
             devtool: settings.sourceMap && 'source-map',
 
-            plugins
+            plugins,
+
+            postcss: () => [require('autoprefixer'), require('precss')],
         })).
         pipe(gulp.dest('./wwwroot/public'))
     );
