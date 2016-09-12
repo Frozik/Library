@@ -75,7 +75,7 @@ module.exports = function (settings) {
                         exclude: /node_modules/
                     },
                     {
-                        test: /\.css$/,
+                        test: /\.*css$/,
                         exclude: /node_modules/,
                         loader: ExtractTextPlugin.extract('style-loader', 'css-loader?camelCase&sourceMap&modules&importLoaders=1&localIdentName=[name]-[local]-[hash:base64:3]!postcss-loader')
                     },

@@ -9,7 +9,7 @@
     "tasks": [
         {
             "taskName": "css-types",
-            "args": ["./node_modules/typed-css-modules/lib/cli.js", "client"]
+            "args": ["./node_modules/typed-css-modules/lib/cli.js", "--pattern", "client/**/*.*css"]
         },
         { 
             "taskName": "build",

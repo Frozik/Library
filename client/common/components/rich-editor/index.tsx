@@ -6,7 +6,7 @@ import { findDOMNode } from "react-dom";
 import ElementHelper from "./../../helpers/element-helper";
 import SelectionToolbar  from "./selection-toolbar";
 
-import { editor } from "./index.css";
+import { editor } from "./index.scss";
 
 interface IRichEditorState {
     blockRect?: ClientRect;

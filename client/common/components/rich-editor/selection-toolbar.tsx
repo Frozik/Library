@@ -7,7 +7,7 @@ import { Icon, Tooltip } from "react-mdl";
 import Translation from "./../../../translation";
 import ElementHelper from "./../../helpers/element-helper";
 
-import { selectedToolbarButton, selectionToolbar, toolbarButton } from "./index.css";
+import { selectedToolbarButton, selectionToolbar, toolbarButton } from "./index.scss";
 
 interface ISelectionToolbarState {}
 
