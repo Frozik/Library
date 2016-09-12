@@ -21,6 +21,7 @@ interface ISelectionToolbarProps {
 const inlineStyles: Array<{ iconName: string, style: string, translationKey: string }> = [
     { iconName: "format_bold", style: "BOLD", translationKey: "bold" },
     { iconName: "format_italic", style: "ITALIC", translationKey: "italic" },
+    { iconName: "format_underline", style: "UNDERLINE", translationKey: "underline" },
 ];
 
 export default class SelectionToolbar extends React.Component<ISelectionToolbarProps, ISelectionToolbarState> {
@@ -41,7 +42,6 @@ export default class SelectionToolbar extends React.Component<ISelectionToolbarP
                         label={Translation.translate("common", "SelectionToolbar", inlineStyle.translationKey)}
                         position="bottom"
                         onMouseDown={this.getInlineStyleHandler.bind(this, inlineStyle.style)}
-                        style={{ display: "inline-block", height: "24px", width: "24px" }}
                     >
                         <Icon name={inlineStyle.iconName} />
                     </Tooltip>

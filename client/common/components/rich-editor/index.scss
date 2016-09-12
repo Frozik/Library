@@ -2,28 +2,55 @@
 
 :local .editor {
     min-width: 600px;
-    margin: 20px;
-    background: $color_grey_50;
-    padding: 20px;
+    padding: 0 0 0 100px;
+    
     font-size: 18px;
-}
 
-:local .selectionToolbar {
-    position: absolute;
-    z-index: 9999;
-    cursor: default;
-    background: $color_grey_300;
-}
+    background: $color_grey_100;
 
-:local .toolbarButton {
-    margin: 5px;
-    background: $color_grey_200;
-}
+    > div {
+        background: $color_grey_50;
+    }
 
-:local .toolbarButton:not(:first-child) {
-    margin-left: 0;
-}
+    :local .selectionToolbar {
+        position: absolute;
+        z-index: 9999;
+        cursor: default;
 
-:local .selectedToolbarButton {
-    background: $color_blue_grey_200;
+        background: $color_grey_300;
+
+        :local .toolbarButton {
+            height: 32px;
+            width: 32px;
+
+            background: $color_grey_200;
+
+            i {
+                font-size: 32px;
+            }
+        }
+
+        :local .selectedToolbarButton {
+            background: $color_blue_grey_200;
+        }
+    }
+
+    :local .blockToolbar {
+        position: absolute;
+        z-index: 9999;
+        cursor: default;
+        
+        :local .toolbarButton {
+            height: 32px;
+            width: 32px;
+
+            i {
+                font-size: 32px;
+            }
+        }
+    }
+
+    div[data-block="true"] {
+        padding: 20px;
+    }
 }

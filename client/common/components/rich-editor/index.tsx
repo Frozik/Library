@@ -4,6 +4,7 @@ import * as React from "react";
 import { findDOMNode } from "react-dom";
 
 import ElementHelper from "./../../helpers/element-helper";
+import BlockToolbar from "./block-toolbar.tsx";
 import SelectionToolbar  from "./selection-toolbar";
 
 import { editor } from "./index.scss";
@@ -27,7 +28,7 @@ export default class RichEditor extends React.Component<IRichEditorProps, IRichE
     }
 
     public render() {
-        const { editorRect, editorState, selectionRect } = this.state;
+        const { blockRect, editorRect, editorState, selectionRect } = this.state;
 
         return (
             <div className={editor}>
@@ -40,14 +41,22 @@ export default class RichEditor extends React.Component<IRichEditorProps, IRichE
                     />
                 )}
 
+                {blockRect && (
+                    <BlockToolbar
+                        blockRect={blockRect}
+                        editorRect={editorRect}
+                        editorState={editorState}
+                        updateEditorState={this.editorStateChanged.bind(this)}
+                    />
+                )}
+
                 <Editor
-                    blockStyleFn={this.getBlockStyle.bind(this)}
                     handleKeyCommand={this.handleKeyCommand.bind(this)}
                     onTab={this.handleTab.bind(this)}
                     editorState={editorState}
                     onChange={this.editorStateChanged.bind(this)}
-                    onFocus={this.updateToolbars.bind(this, editorState)}
-                    onBlur={this.resetToolbars.bind(this)}
+                    onFocus={this.deferUpdateToolbars.bind(this, editorState)}
+                    onBlur={this.deferResetToolbars.bind(this)}
                     spellCheck
                 />
             </div>
@@ -67,19 +76,27 @@ export default class RichEditor extends React.Component<IRichEditorProps, IRichE
             return;
         }
 
-        defer(() => this.setState({
+        this.setState({
             blockRect: this.getEditBlockNodeRect(editorState, editorNode),
             editorRect: ElementHelper.getElementRect(editorNode),
             selectionRect: this.getSelectionRect(editorState),
-        }));
+        });
+    }
+
+    protected deferUpdateToolbars(editorState: EditorState) {
+        defer(this.updateToolbars.bind(this, editorState));
     }
 
     protected resetToolbars() {
-        defer(() => this.setState({
+        this.setState({
             blockRect: null,
             editorRect: null,
             selectionRect: null,
-        }));
+        });
+    }
+
+    protected deferResetToolbars() {
+        defer(this.resetToolbars.bind(this));
     }
 
     protected getEditBlockNodeRect(editorState: EditorState, editorNode: Element): ClientRect {
@@ -118,15 +135,6 @@ export default class RichEditor extends React.Component<IRichEditorProps, IRichE
         }
 
         return getVisibleSelectionRect(window);
-    }
-
-    protected getBlockStyle(block: Draft.Model.ImmutableData.ContentBlock) {
-        switch (block.getType()) {
-            case "blockquote":
-                return "RichEditor-blockquote";
-
-            default: return null;
-        }
     }
 
     protected handleKeyCommand(command: any): boolean {

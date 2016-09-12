@@ -3,6 +3,7 @@ export default {
         SelectionToolbar: {
             bold: "Bold",
             italic: "Italic",
+            underline: "Underline",
         },
     },
 };
