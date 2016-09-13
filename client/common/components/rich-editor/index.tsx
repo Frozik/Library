@@ -134,7 +134,7 @@ export default class RichEditor extends React.Component<IRichEditorProps, IRichE
             return null;
         }
 
-        return getVisibleSelectionRect(window);
+        return ElementHelper.fromWindowToDocument(getVisibleSelectionRect(window));
     }
 
     protected handleKeyCommand(command: any): boolean {

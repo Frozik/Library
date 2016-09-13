@@ -1,6 +1,24 @@
 import * as _ from "lodash";
 
 export default class ElementHelper {
+    public static fromWindowToDocument(clientRect: ClientRect): ClientRect {
+        if (!clientRect) {
+            return clientRect;
+        }
+
+        const scrollX = window.scrollX;
+        const scrollY = window.scrollY;
+
+        return {
+            bottom: clientRect.bottom + scrollY,
+            height: clientRect.height,
+            left: clientRect.left + scrollX,
+            right: clientRect.right + scrollX,
+            top: clientRect.top + scrollY,
+            width: clientRect.width
+         };
+    }
+
     public static getElementRect(element: Element): ClientRect {
         if (!element) {
             throw new Error("'element' is not defined");
@@ -9,12 +27,14 @@ export default class ElementHelper {
         const documentElement: Element = document.documentElement;
         const boundingClientRect: ClientRect = element.getBoundingClientRect();
 
-        const left = Math.round(boundingClientRect.left) - documentElement.clientLeft;
-        const right = Math.round(boundingClientRect.right) - documentElement.clientLeft;
-        const top = Math.round(boundingClientRect.top) - documentElement.clientTop;
-        const bottom = Math.round(boundingClientRect.bottom) - documentElement.clientTop;
+        const left = boundingClientRect.left - documentElement.clientLeft;
+        const right = boundingClientRect.right - documentElement.clientLeft;
+        const top = boundingClientRect.top - documentElement.clientTop;
+        const bottom = boundingClientRect.bottom - documentElement.clientTop;
 
-        return { bottom, height: bottom - top, left, right, top, width: right - left };
+        return ElementHelper.fromWindowToDocument(
+            { bottom, height: bottom - top, left, right, top, width: right - left }
+        );
     }
 
     public static isWithinContainer(container: Node, ...checkNodes: Array<Node>): boolean {
