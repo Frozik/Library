@@ -4,8 +4,8 @@ import { map } from "lodash";
 import * as React from "react";
 import { Icon, Tooltip } from "react-mdl";
 
-import Translation from "./../../../translation";
 import ElementHelper from "./../../helpers/element-helper";
+import translate from "./../../translation";
 
 import { selectedToolbarButton, selectionToolbar, toolbarButton } from "./index.scss";
 
@@ -39,7 +39,7 @@ export default class SelectionToolbar extends React.Component<ISelectionToolbarP
                             toolbarButton,
                             { [selectedToolbarButton]: currentStyle.has(inlineStyle.style) }
                         )}
-                        label={Translation.translate("common", "SelectionToolbar", inlineStyle.translationKey)}
+                        label={translate("SelectionToolbar", inlineStyle.translationKey)}
                         position="bottom"
                         onMouseDown={this.getInlineStyleHandler.bind(this, inlineStyle.style)}
                     >

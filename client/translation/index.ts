@@ -1,7 +1,7 @@
 import * as i18next from "i18next";
 
 import Culture from "./culture";
-import enUSTranslation from "./dictionaries/en-Us";
+import enUSTranslation from "./dictionaries/en-us";
 
 const dictionaries = i18next.init({
     lng: Culture.EnUs,
@@ -10,8 +10,6 @@ const dictionaries = i18next.init({
     },
 });
 
-export default class Translation {
-    public static translate(...paths: Array<string>): string {
-        return dictionaries.t((paths || []).join("."));
-    }
+export default function translate(...paths: Array<string>): string {
+    return dictionaries.t((paths || []).join("."));
 }

@@ -1,9 +1,11 @@
 import { EditorState } from "draft-js";
 import * as React from "react";
+import { Icon, Tooltip } from "react-mdl";
 
 import ElementHelper from "./../../helpers/element-helper";
+import translate from "./../../translation";
 
-import { blockToolbar } from "./index.scss";
+import { blockToolbar, toolbarButton } from "./index.scss";
 
 interface IBlockToolbarState {}
 
@@ -26,7 +28,23 @@ export default class BlockToolbar extends React.Component<IBlockToolbarProps, IB
     public render() {
         return (
             <div ref={this.updatePopupPosition.bind(this)} className={blockToolbar}>
-                Test
+                <Tooltip
+                    className={toolbarButton}
+                    label={translate("BlockToolbar", "addObject")}
+                    position="bottom"
+                    // onMouseDown={}
+                >
+                    <Icon name="add" />
+                </Tooltip>
+
+                <Tooltip
+                    className={toolbarButton}
+                    label={translate("BlockToolbar", "showBlockFormattingMenu")}
+                    position="bottom"
+                    // onMouseDown={}
+                >
+                    <Icon name="menu" />
+                </Tooltip>
             </div>
         );
     }
