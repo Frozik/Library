@@ -17,9 +17,9 @@ interface IBlockToolbarProps {
 const blockStyles: Array<{ iconName?: string, style: string, text?: string, translationKey: string }> = [
     { style: "header-one", text: "H1", translationKey: "eaderOne" },
     { style: "header-two", text: "H2", translationKey: "headerTwo" },
-    { iconName: "format_underline", style: "unordered-list-item", translationKey: "unorderedListItem" },
-    { iconName: "format_underline", style: "ordered-list-item", translationKey: "orderedListItem" },
-    { iconName: "format_underline", style: "blockquote", translationKey: "blockquote" },
+    { iconName: "format_list_bulleted", style: "unordered-list-item", translationKey: "unorderedListItem" },
+    { iconName: "format_list_numbered", style: "ordered-list-item", translationKey: "orderedListItem" },
+    { iconName: "format_quote", style: "blockquote", translationKey: "blockquote" },
 ];
 */
 export default class BlockToolbar extends React.Component<IBlockToolbarProps, IBlockToolbarState> {

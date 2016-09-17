@@ -3,6 +3,10 @@ import * as _ from "lodash";
 export default class ElementHelper {
     public static fromWindowToDocument(clientRect: ClientRect): ClientRect {
         if (!clientRect) {
+            throw new Error("'clientRect' is not defined");
+        }
+
+        if (!clientRect) {
             return clientRect;
         }
 
@@ -15,7 +19,7 @@ export default class ElementHelper {
             left: clientRect.left + scrollX,
             right: clientRect.right + scrollX,
             top: clientRect.top + scrollY,
-            width: clientRect.width
+            width: clientRect.width,
          };
     }
 

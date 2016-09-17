@@ -27,7 +27,7 @@ module.exports = function(config) {
                         exclude: /node_modules/
                     },
                     {
-                        test: /\.css$/,
+                        test: /\.*css$/,
                         exclude: /node_modules/,
                         loader: 'style-loader!css-loader?camelCase&sourceMap&modules&importLoaders=1&localIdentName=[name]-[local]-[hash:base64:3]!postcss-loader'
                     },

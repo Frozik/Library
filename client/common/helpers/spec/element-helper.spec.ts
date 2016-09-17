@@ -1,8 +1,43 @@
 import { expect } from "chai";
+import { random } from "lodash";
 
 import ElementHelper from "./../element-helper";
 
 describe("ElementHelper", () => {
+    describe("fromWindowToDocument", () => {
+        it("Checks client element size", () => {
+            const testElement = document.createElement("div");
+            testElement.style.position = "absolute";
+            testElement.style.left = `${random(0, window.innerWidth - 2)}px`;
+            testElement.style.top = `${random(0, window.innerHeight - 2)}px`;
+            testElement.style.width = "1px";
+            testElement.style.height = "1px";
+
+            testElement.appendChild(document.createTextNode("XXX"));
+
+            document.body.appendChild(testElement);
+
+            const bodyElement = <HTMLBodyElement> document.querySelector("body");
+            bodyElement.style.height = `${window.innerHeight + 500}px`;
+            bodyElement.style.width = `${window.innerWidth + 500}px`;
+
+            const initialMeasure = testElement.getBoundingClientRect();
+            const initialMeasureDocument = ElementHelper.fromWindowToDocument(initialMeasure);
+
+            window.scrollTo(random(1, window.innerWidth), random(1, window.innerHeight));
+
+            const scrollMeasure = testElement.getBoundingClientRect();
+            const scrollMeasureDocument = ElementHelper.fromWindowToDocument(scrollMeasure);
+
+            expect(initialMeasure).to.not.eql(scrollMeasure);
+            expect(initialMeasureDocument).to.eql(scrollMeasureDocument);
+        });
+
+        it("Fail in case of null parameter", () => {
+            expect(ElementHelper.fromWindowToDocument).to.throw(Error);
+        });
+    });
+
     describe("getElementRect", () => {
         it("Checks element rect", () => {
             const testElement = document.createElement("div");
