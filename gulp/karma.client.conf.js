@@ -8,7 +8,7 @@ module.exports = function(config) {
             './../client/**/*.spec.ts*',
         ],
 
-        frameworks: ['mocha', 'chai'],
+        frameworks: ['phantomjs-shim', 'mocha', 'chai'],
 
         reporters: ['spec'],
 

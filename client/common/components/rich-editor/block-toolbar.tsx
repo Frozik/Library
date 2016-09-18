@@ -5,7 +5,7 @@ import { Icon, Tooltip } from "react-mdl";
 import ElementHelper from "./../../helpers/element-helper";
 import translate from "./../../translation";
 
-import { blockToolbar, toolbarButton } from "./index.scss";
+import { blockToolbar, toolbarIcon } from "./index.scss";
 
 interface IBlockToolbarState {}
 
@@ -28,23 +28,8 @@ export default class BlockToolbar extends React.Component<IBlockToolbarProps, IB
     public render() {
         return (
             <div ref={this.updatePopupPosition.bind(this)} className={blockToolbar}>
-                <Tooltip
-                    className={toolbarButton}
-                    label={translate("BlockToolbar", "addObject")}
-                    position="bottom"
-                    // onMouseDown={}
-                >
-                    <Icon name="add" />
-                </Tooltip>
-
-                <Tooltip
-                    className={toolbarButton}
-                    label={translate("BlockToolbar", "showBlockFormattingMenu")}
-                    position="bottom"
-                    // onMouseDown={}
-                >
-                    <Icon name="menu" />
-                </Tooltip>
+                <Icon className={toolbarIcon} name="add" />
+                <Icon className={toolbarIcon} name="menu" />
             </div>
         );
     }

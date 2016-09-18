@@ -66,7 +66,7 @@ export default class RichEditor extends React.Component<IRichEditorProps, IRichE
     protected editorStateChanged(editorState: EditorState) {
         this.setState({ editorState });
 
-        this.updateToolbars(editorState);
+        this.deferUpdateToolbars(editorState);
     }
 
     protected updateToolbars(editorState: EditorState) {
@@ -144,7 +144,7 @@ export default class RichEditor extends React.Component<IRichEditorProps, IRichE
         const newState = RichUtils.handleKeyCommand(editorState, command);
 
         if (newState) {
-            this.editorStateChanged(newState);
+            this.deferUpdateToolbars(editorState);
 
             return true;
         }

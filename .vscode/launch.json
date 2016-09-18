@@ -17,16 +17,27 @@
             "userDataDir": "${workspaceRoot}/.vscode/chrome",
             "sourceMaps": true,
             "webRoot": "${workspaceRoot}",
-            "sourceRoot": "${workspaceRoot}/client",
+            "localRoot": "${workspaceRoot}/client",
             "preLaunchTask": "build-client",
-            "diagnosticLogging": true
+            "diagnosticLogging": true,
+        },
+        {
+            "name": "Attach to Chrome",
+            "type": "chrome",
+            "request": "attach",
+            "userDataDir": "${workspaceRoot}/.vscode/chrome",
+            "sourceMaps": true,
+            "webRoot": "${workspaceRoot}",
+            "localRoot": "${workspaceRoot}/client",
+            "diagnosticLogging": true,
+			"port": 9222, 
         },
         {
 			"name": "Debug Application",
 			"type": "node",
 			"request": "launch",
 			"program": "${workspaceRoot}/wwwroot/server.js",
-            "sourceRoot": "${workspaceRoot}/server",
+            "localRoot": "${workspaceRoot}/server",
 			"stopOnEntry": true,
 			"args": [],
 			"cwd": "${workspaceRoot}",
@@ -39,7 +50,7 @@
 				"NODE_ENV": "development"
 			},
 			"sourceMaps": true,
-			"outDir": "${workspaceRoot}/wwwroot"
+			"outDir": "${workspaceRoot}/wwwroot",
 		}
     ]
 }
