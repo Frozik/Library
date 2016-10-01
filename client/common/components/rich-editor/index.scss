@@ -53,6 +53,9 @@ $button-selected-color: $color_blue_grey_200;
             height: $button-size;
             width: $button-size;
 
+            text-align: center;
+            line-height: $button-size;
+
             background: $button-color;
 
             i {
@@ -81,8 +84,12 @@ $button-selected-color: $color_blue_grey_200;
         }
     }
 
-    [data-block="true"] {
+    div[data-block="true"], h1[data-block="true"], h2[data-block="true"], ul[data-block="true"] {
         margin: 0;
+        padding: 20px;
+    }
+
+    blockquote[data-block="true"] {
         padding: 20px;
     }
 }

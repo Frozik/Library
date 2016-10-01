@@ -47,26 +47,28 @@ export default class BlockToolbar extends React.Component<IBlockToolbarProps, IB
     public render() {
         const { activeMenu, closePopup } = this.state;
 
+        const closePopupHandler = () => closePopup();
+
         return (
             <div ref={this.updatePopupPosition.bind(this)} className={blockToolbar}>
                 <Icon
                     className={classNames(toolbarIcon, { [highlighted]: activeMenu === MenuItem.AddObject })}
                     name="add"
                     onMouseOver={this.updateSelectedMenuItem.bind(this, MenuItem.AddObject, null)}
-                    onMouseOut={closePopup}
+                    onMouseOut={closePopupHandler}
                 />
                 <Icon
                     className={classNames(toolbarIcon, { [highlighted]: activeMenu === MenuItem.BlockSyntax })}
                     name="menu"
                     onMouseOver={this.updateSelectedMenuItem.bind(this, MenuItem.BlockSyntax, null)}
-                    onMouseOut={closePopup}
+                    onMouseOut={closePopupHandler}
                 />
 
                 {!isNull(activeMenu) && (
                     <div
                         className={expandBox}
                         onMouseOver={this.cancelClose.bind(this)}
-                        onMouseOut={closePopup}
+                        onMouseOut={closePopupHandler}
                     >
                         {activeMenu === MenuItem.AddObject && this.buildAddObjectMenu()}
                         {activeMenu === MenuItem.BlockSyntax && this.buildBlockSyntaxMenu()}
@@ -138,7 +140,7 @@ export default class BlockToolbar extends React.Component<IBlockToolbarProps, IB
         const { blockRect, editorRect } = this.props;
         const elementRect = ElementHelper.getElementRect(element);
 
-        const left = editorRect.left + (editorRect.width - blockRect.width - elementRect.width) / 2;
+        const left = editorRect.left;
         const top = blockRect.top + (blockRect.height - elementRect.height) / 2;
 
         const realLeft = Math.max(

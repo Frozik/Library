@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "classnames": "^2.2.5",
-    "draft-js": "^0.8.1",
+    "draft-js": "^0.9.1",
     "express": "^4.14.0",
     "i18next": "^3.4.1",
     "keymirror": "^0.1.1",
@@ -52,7 +52,7 @@
     "karma-phantomjs-shim": "^1.4.0",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-spec-reporter": "0.0.26",
-    "karma-typescript-preprocessor": "^0.2.1",
+    "karma-typescript-preprocessor": "^0.3.0",
     "karma-webpack": "^1.8.0",
     "mocha": "^3.0.2",
     "postcss-cli": "^2.6.0",
@@ -65,11 +65,11 @@
     "ts-loader": "^0.8.2",
     "ts-node": "^1.3.0",
     "tslint": "^3.15.1",
-    "tslint-eslint-rules": "^1.5.0",
+    "tslint-eslint-rules": "^2.0.1",
     "tslint-loader": "^2.1.5",
     "tslint-react": "^1.0.0",
     "typed-css-modules": "^0.1.12",
-    "typescript": "^1.8.10",
+    "typescript": "^2.0.3",
     "webpack": "^1.13.2"
   }
 }

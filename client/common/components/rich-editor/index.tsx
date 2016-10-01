@@ -4,7 +4,8 @@ import * as React from "react";
 import { findDOMNode } from "react-dom";
 
 import ElementHelper from "./../../helpers/element-helper";
-import BlockToolbar from "./block-toolbar.tsx";
+import KeyCodes from "./../../helpers/key-codes";
+import BlockToolbar from "./block-toolbar";
 import SelectionToolbar  from "./selection-toolbar";
 
 import { editor } from "./index.scss";
@@ -52,6 +53,7 @@ export default class RichEditor extends React.Component<IRichEditorProps, IRichE
 
                 <Editor
                     handleKeyCommand={this.handleKeyCommand.bind(this)}
+                    handleReturn={this.handleReturn.bind(this)}
                     onTab={this.handleTab.bind(this)}
                     editorState={editorState}
                     onChange={this.editorStateChanged.bind(this)}
@@ -144,12 +146,30 @@ export default class RichEditor extends React.Component<IRichEditorProps, IRichE
         const newState = RichUtils.handleKeyCommand(editorState, command);
 
         if (newState) {
-            this.deferUpdateToolbars(editorState);
+            this.editorStateChanged(newState);
 
             return true;
         }
 
         return false;
+    }
+
+    protected handleReturn(event: React.KeyboardEvent): boolean {
+        const { editorState } = this.state;
+
+        switch (event.keyCode) {
+            case KeyCodes.enter:
+                if (event.shiftKey) {
+                    this.editorStateChanged(RichUtils.insertSoftNewline(editorState));
+
+                    return true;
+                }
+
+                return false;
+
+            default:
+                return false;
+        }
     }
 
     protected handleTab(event: SyntheticKeyboardEvent) {
