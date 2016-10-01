@@ -4,6 +4,7 @@ $button-size: 32px;
 $field-color: $color_grey_50;
 $side-color: $color_grey_100;
 $button-color: $color_grey_200;
+$button-selected-color: $color_blue_grey_200;
 
 :local .editor {
     min-width: 600px;
@@ -34,7 +35,7 @@ $button-color: $color_grey_200;
         }
 
         :local .selectedToolbarButton {
-            background: $button-color;
+            background: $button-selected-color;
         }
     }
 
@@ -59,17 +60,29 @@ $button-color: $color_grey_200;
             }
         }
 
+        :local .selectedToolbarButton {
+            background: $button-selected-color;
+        }
+
         :local .expandBox {
+            position: absolute;
+
             display: flex;
             flex-flow: row wrap;
             justify-content: flex-start;
 
             width: calc($button-size * 2);
 
+            background: $button-color;
+        }
+
+        :local .highlighted {
+            background: $button-selected-color;
         }
     }
 
-    div[data-block="true"] {
+    [data-block="true"] {
+        margin: 0;
         padding: 20px;
     }
 }

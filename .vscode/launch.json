@@ -25,6 +25,7 @@
             "name": "Attach to Chrome",
             "type": "chrome",
             "request": "attach",
+            "url": "http://localhost:3000",
             "userDataDir": "${workspaceRoot}/.vscode/chrome",
             "sourceMaps": true,
             "webRoot": "${workspaceRoot}",
