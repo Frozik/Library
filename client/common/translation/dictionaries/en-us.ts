@@ -10,8 +10,10 @@ export default {
     },
 
     SelectionToolbar: {
+        addLink: "Add link",
         bold: "Bold",
         italic: "Italic",
+        removeLink: "Remove link",
         underline: "Underline",
     },
 };

@@ -5,7 +5,11 @@ $field-color: $color_grey_50;
 $side-color: $color_grey_100;
 $button-color: $color_grey_200;
 $button-selected-color: $color_blue_grey_200;
+$button-disabled-color: $color_grey_500;
 $block-padding: 20px;
+$input-margin: 2px;
+$blur-input-background: $color_grey_300;
+$focus-input-background: $color_grey_50;
 
 :local .editor {
     min-width: 600px;
@@ -23,10 +27,12 @@ $block-padding: 20px;
         position: absolute;
         z-index: 9999;
         cursor: default;
+        background: $button-color;
 
         :local .toolbarButton {
             height: $button-size;
             width: $button-size;
+            max-width: $button-size;
 
             background: $button-color;
 
@@ -37,6 +43,26 @@ $block-padding: 20px;
 
         :local .selectedToolbarButton {
             background: $button-selected-color;
+        }
+
+        :local .disabledToolbarButton {
+            background: $button-disabled-color;
+        }
+
+        :local .actionInput {
+            float: left;
+            
+            height: calc($button-size - 2 * $input-margin);
+            margin: $input-margin;
+            padding: 0 calc($block-padding / 2);
+
+            border: 0;
+            background: $blur-input-background;
+
+            &:focus {
+                outline: none;
+                background: $focus-input-background; 
+            }
         }
     }
 

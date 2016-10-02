@@ -66,4 +66,12 @@ export default class ElementHelper {
             return false;
         });
     }
+
+    public static focusElement(element: HTMLElement) {
+        if (!element || document.activeElement === element) {
+            return;
+        }
+
+        element.focus();
+    }
 }

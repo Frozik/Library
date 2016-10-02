@@ -1,4 +1,4 @@
-import { Editor, EditorState, RichUtils, getVisibleSelectionRect } from "draft-js";
+import { CompositeDecorator, Editor, EditorState, RichUtils, getVisibleSelectionRect } from "draft-js";
 import { defer, isEqual } from "lodash";
 import * as React from "react";
 import { findDOMNode } from "react-dom";
@@ -6,9 +6,10 @@ import { findDOMNode } from "react-dom";
 import ElementHelper from "./../../helpers/element-helper";
 import KeyCodes from "./../../helpers/key-codes";
 import BlockToolbar from "./block-toolbar";
+import linkDecorator from "./link-decorator";
 import SelectionToolbar  from "./selection-toolbar";
 
-import { editor } from "./index.scss";
+import { editor } from "./styles/index.scss";
 
 interface IRichEditorState {
     blockRect?: ClientRect;
@@ -23,9 +24,13 @@ export default class RichEditor extends React.Component<IRichEditorProps, IRichE
     public constructor(props: IRichEditorProps) {
         super(props);
 
-        this.state = {
-            editorState: EditorState.createEmpty(),
-        };
+        const compositeDecorator = new CompositeDecorator([
+            linkDecorator,
+        ]);
+
+        const editorState = EditorState.createEmpty(compositeDecorator);
+
+        this.state = { editorState };
     }
 
     public render() {
@@ -33,23 +38,19 @@ export default class RichEditor extends React.Component<IRichEditorProps, IRichE
 
         return (
             <div className={editor}>
-                {selectionRect && (
-                    <SelectionToolbar
-                        editorRect={editorRect}
-                        editorState={editorState}
-                        selectionRect={selectionRect}
-                        updateEditorState={this.editorStateChanged.bind(this)}
-                    />
-                )}
+                <SelectionToolbar
+                    editorRect={editorRect}
+                    editorState={editorState}
+                    selectionRect={selectionRect}
+                    updateEditorState={this.editorStateChanged.bind(this)}
+                />
 
-                {blockRect && (
-                    <BlockToolbar
-                        blockRect={blockRect}
-                        editorRect={editorRect}
-                        editorState={editorState}
-                        updateEditorState={this.editorStateChanged.bind(this)}
-                    />
-                )}
+                <BlockToolbar
+                    blockRect={blockRect}
+                    editorRect={editorRect}
+                    editorState={editorState}
+                    updateEditorState={this.editorStateChanged.bind(this)}
+                />
 
                 <Editor
                     handleKeyCommand={this.handleKeyCommand.bind(this)}
@@ -114,7 +115,6 @@ export default class RichEditor extends React.Component<IRichEditorProps, IRichE
     protected resetToolbars() {
         this.setState({
             blockRect: null,
-            editorRect: null,
             selectionRect: null,
         });
     }

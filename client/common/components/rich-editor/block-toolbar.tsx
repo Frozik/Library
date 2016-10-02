@@ -14,8 +14,8 @@ import {
     highlighted,
     selectedToolbarButton,
     toolbarButton,
-    toolbarIcon
-} from "./index.scss";
+    toolbarIcon,
+} from "./styles/index.scss";
 
 enum MenuItem {
     AddObject,
@@ -53,8 +53,13 @@ export default class BlockToolbar extends React.Component<IBlockToolbarProps, IB
     }
 
     public render() {
-        const { activeMenu, closePopup } = this.state;
+        const { blockRect } = this.props;
 
+        if (!blockRect) {
+            return null;
+        }
+
+        const { activeMenu, closePopup } = this.state;
         const closePopupHandler = () => closePopup();
 
         return (
@@ -92,7 +97,6 @@ export default class BlockToolbar extends React.Component<IBlockToolbarProps, IB
 
     private buildBlockSyntaxMenu(): Array<JSX.Element> {
         const { editorState } = this.props;
-
         const selection = editorState.getSelection();
         const blockType = editorState.getCurrentContent().getBlockForKey(selection.getStartKey()).getType();
 
