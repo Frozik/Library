@@ -19,7 +19,7 @@
             "webRoot": "${workspaceRoot}",
             "localRoot": "${workspaceRoot}/client",
             "preLaunchTask": "build-client",
-            "diagnosticLogging": true,
+            "diagnosticLogging": true
         },
         {
             "name": "Attach to Chrome",
@@ -31,7 +31,7 @@
             "webRoot": "${workspaceRoot}",
             "localRoot": "${workspaceRoot}/client",
             "diagnosticLogging": true,
-			"port": 9222, 
+			"port": 9222
         },
         {
 			"name": "Debug Application",
@@ -51,7 +51,7 @@
 				"NODE_ENV": "development"
 			},
 			"sourceMaps": true,
-			"outDir": "${workspaceRoot}/wwwroot",
+			"outDir": "${workspaceRoot}/wwwroot"
 		}
     ]
 }

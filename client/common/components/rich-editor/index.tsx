@@ -1,5 +1,5 @@
 import { Editor, EditorState, RichUtils, getVisibleSelectionRect } from "draft-js";
-import { defer } from "lodash";
+import { defer, isEqual } from "lodash";
 import * as React from "react";
 import { findDOMNode } from "react-dom";
 
@@ -72,17 +72,39 @@ export default class RichEditor extends React.Component<IRichEditorProps, IRichE
     }
 
     protected updateToolbars(editorState: EditorState) {
+        const {
+            blockRect: originalBlockRect,
+            editorRect: originalEditorRect,
+            selectionRect: originalSelectionRect,
+        } = this.state;
+        const selectionState = editorState.getSelection();
+
         const editorNode = findDOMNode(this);
 
         if (!editorNode) {
             return;
         }
 
-        this.setState({
-            blockRect: this.getEditBlockNodeRect(editorState, editorNode),
-            editorRect: ElementHelper.getElementRect(editorNode),
-            selectionRect: this.getSelectionRect(editorState),
-        });
+        const editorRect: ClientRect = ElementHelper.getElementRect(editorNode);
+        let blockRect: ClientRect = null;
+        let selectionRect: ClientRect = null;
+
+        if (selectionState.getHasFocus()) {
+            blockRect = this.getEditBlockNodeRect(editorState, editorNode);
+            selectionRect = this.getSelectionRect(editorState);
+        }
+
+        if (!isEqual(editorRect, originalEditorRect)) {
+            this.setState({ editorRect });
+        }
+
+        if (!isEqual(blockRect, originalBlockRect)) {
+            this.setState({ blockRect });
+        }
+
+        if (!isEqual(selectionRect, originalSelectionRect)) {
+            this.setState({ selectionRect });
+        }
     }
 
     protected deferUpdateToolbars(editorState: EditorState) {

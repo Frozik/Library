@@ -7,7 +7,15 @@ import { Icon, Tooltip } from "react-mdl";
 import ElementHelper from "./../../helpers/element-helper";
 import translate from "./../../translation";
 
-import { blockToolbar, expandBox, highlighted, selectedToolbarButton, toolbarButton, toolbarIcon } from "./index.scss";
+import {
+    blockToolbar,
+    expandBox,
+    hidden,
+    highlighted,
+    selectedToolbarButton,
+    toolbarButton,
+    toolbarIcon
+} from "./index.scss";
 
 enum MenuItem {
     AddObject,
@@ -50,7 +58,7 @@ export default class BlockToolbar extends React.Component<IBlockToolbarProps, IB
         const closePopupHandler = () => closePopup();
 
         return (
-            <div ref={this.updatePopupPosition.bind(this)} className={blockToolbar}>
+            <div ref={this.updatePopupPosition.bind(this)} className={classNames(blockToolbar, hidden)}>
                 <Icon
                     className={classNames(toolbarIcon, { [highlighted]: activeMenu === MenuItem.AddObject })}
                     name="add"
@@ -140,15 +148,11 @@ export default class BlockToolbar extends React.Component<IBlockToolbarProps, IB
         const { blockRect, editorRect } = this.props;
         const elementRect = ElementHelper.getElementRect(element);
 
-        const left = editorRect.left;
         const top = blockRect.top + (blockRect.height - elementRect.height) / 2;
-
-        const realLeft = Math.max(
-            editorRect.left,
-            Math.min(editorRect.right - blockRect.width - elementRect.width, left));
         const realTop = Math.max(blockRect.top, Math.min(blockRect.bottom - elementRect.height, top));
 
-        element.style.left = `${realLeft}px`;
+        element.style.left = `${editorRect.left}px`;
         element.style.top = `${realTop}px`;
+        element.classList.remove(hidden);
     }
 }

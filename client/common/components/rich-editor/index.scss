@@ -5,6 +5,7 @@ $field-color: $color_grey_50;
 $side-color: $color_grey_100;
 $button-color: $color_grey_200;
 $button-selected-color: $color_blue_grey_200;
+$block-padding: 20px;
 
 :local .editor {
     min-width: 600px;
@@ -84,12 +85,33 @@ $button-selected-color: $color_blue_grey_200;
         }
     }
 
+    :local .hidden {
+        visibility: hidden;
+    }
+
     div[data-block="true"], h1[data-block="true"], h2[data-block="true"], ul[data-block="true"] {
         margin: 0;
-        padding: 20px;
+        padding: $block-padding;
     }
 
     blockquote[data-block="true"] {
-        padding: 20px;
+        margin: 0 0 0 $block-padding;
+        padding: $block-padding;
+
+        border-left: 3px solid $color_blue_grey_700;
+
+        &:before {
+            content: '“';
+            position: absolute;
+            left: 0;
+            margin-top: -1em;
+        }
+
+        &:after {
+            content: '”';
+            position: absolute;
+            left: 0;
+            margin-left: 0;
+        }
     }
 }
