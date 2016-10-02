@@ -6,8 +6,6 @@ import IDecoratorProps from "./model/decorator-props";
 import IDraftDecorator from "./model/draft-decorator";
 import EntityType from "./model/entity-type";
 
-
-
 const Link = ({ children, entityKey }: IDecoratorProps): JSX.Element => {
     const { url }: IActionLinkData = Entity.get(entityKey).getData();
 
@@ -16,7 +14,7 @@ const Link = ({ children, entityKey }: IDecoratorProps): JSX.Element => {
             {children}
         </a>
     );
-}
+};
 
 function findLinkEntities(contentBlock: ContentBlock, callback: (start: number, end: number) => void) {
     contentBlock.findEntityRanges(character => {

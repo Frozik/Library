@@ -1,5 +1,5 @@
 import * as classNames from "classnames";
-import { CharacterMetadata, EditorState, Entity, RichUtils } from "draft-js";
+import { EditorState, Entity, RichUtils } from "draft-js";
 import { first, includes, isEmpty, isNull, map } from "lodash";
 import * as React from "react";
 import { Icon, Tooltip } from "react-mdl";
@@ -9,7 +9,6 @@ import KeyCodes from "./../../helpers/key-codes";
 import translate from "./../../translation";
 import Action from "./model/action";
 import IActionLinkData from "./model/action-link-data";
-import EditorChangeType from "./model/editor-change-type";
 import EntityMutability from "./model/entity-mutability";
 import EntityType from "./model/entity-type";
 
@@ -242,10 +241,10 @@ export default class SelectionToolbar extends React.Component<ISelectionToolbarP
             buttons.push(
                 <Tooltip
                     key="remove-link"
-                    className={classNames(toolbarButton, { [selectedToolbarButton]: hasLink })}
+                    className={toolbarButton}
                     label={translate("SelectionToolbar", "removeLink")}
                     position="bottom"
-                    onMouseDown={this.setAction.bind(this, Action.link, { url: first(links) || "" })}
+                    onMouseDown={this.removeLink.bind(this)}
                 >
                     <Icon name="link" />
                 </Tooltip>
@@ -267,32 +266,15 @@ export default class SelectionToolbar extends React.Component<ISelectionToolbarP
         }
     }
 
-    private removeLink(url: string, event: React.MouseEvent = null) {
+    private removeLink(event: React.MouseEvent = null) {
         if (event) {
             event.preventDefault();
         }
 
         const { editorState, updateEditorState } = this.props;
         const selectionState = editorState.getSelection();
-        const selectionBlockKey = selectionState.getStartKey();
-        const startOffset = selectionState.getStartOffset();
-        const endOffset = selectionState.getEndOffset();
-        const minOffset = Math.min(startOffset, endOffset);
-        const maxOffset = Math.max(startOffset, endOffset);
-        const contentState = editorState.getCurrentContent();
-        const blockMap = contentState.getBlockMap();
-        const block = blockMap.get(selectionBlockKey);
-        const charList = block.getCharacterList();
-        const newCharList = charList.map((characterMetadata: CharacterMetadata, index: number) =>
-            index >= minOffset && index < maxOffset
-                ? CharacterMetadata.applyEntity(characterMetadata, null)
-                : characterMetadata
-        );
-        block.set("characterList", newCharList);
-        const newBlockMap = blockMap.set(selectionBlockKey, block);
-        contentState.set("blockMap", newBlockMap);
 
-        return EditorState.push(editorState, contentState, EditorChangeType.applyEntity);
+        updateEditorState(RichUtils.toggleLink(editorState, selectionState, null));
     }
 
     private addLink(url: string, event: React.MouseEvent = null) {
