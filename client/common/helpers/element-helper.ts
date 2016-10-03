@@ -67,7 +67,7 @@ export default class ElementHelper {
         });
     }
 
-    public static focusElement(element: HTMLElement) {
+    public static focusElement(element: HTMLInputElement | HTMLTextAreaElement) {
         if (!element || document.activeElement === element) {
             return;
         }

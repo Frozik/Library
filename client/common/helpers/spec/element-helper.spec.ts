@@ -150,4 +150,22 @@ describe("ElementHelper", () => {
         });
     });
 
+    describe("focusElement", () => {
+        it("Check input is focused", () => {
+            const inputElement = document.createElement("input");
+            inputElement.setAttribute("type", "text");
+
+            document.body.appendChild(inputElement);
+
+            ElementHelper.focusElement(inputElement);
+
+            expect(inputElement).to.be.eql(document.activeElement);
+
+            document.body.removeChild(inputElement);
+        });
+
+        it("Don't fail in case of null parameter", () => {
+            expect(ElementHelper.focusElement).not.to.throw(Error);
+        });
+    });
 });
