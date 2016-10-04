@@ -35,6 +35,16 @@ module.exports = function (settings) {
             from: '*.min.js*',
             to: path.resolve(__dirname, '../js')
         },
+        {
+            context: path.resolve(__dirname, './../node_modules/katex/dist'),
+            from: '*.min.css',
+            to: path.resolve(__dirname, '../css')
+        },
+        {
+            context: path.resolve(__dirname, './../node_modules/katex/dist'),
+            from: 'fonts',
+            to: path.resolve(__dirname, '../css/fonts')
+        },
     ]));
 
     gulp.task(taskName, () => gulp.src('./client/application.ts').
@@ -52,6 +62,7 @@ module.exports = function (settings) {
                     'redux', 'redux-thunk',
                     'react', 'react-dom', 'react-router', 'react-redux', 'react-addons-update', 'react-mdl',
                     'draft-js',
+                    'katex'
                 ]
             },
 

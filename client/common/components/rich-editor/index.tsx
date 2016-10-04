@@ -1,18 +1,30 @@
-import { CompositeDecorator, Editor, EditorState, RichUtils, getVisibleSelectionRect } from "draft-js";
-import { defer, isEqual } from "lodash";
+import {
+    CompositeDecorator,
+    ContentBlock,
+    Editor,
+    EditorState,
+    Entity,
+    RichUtils,
+    getVisibleSelectionRect,
+} from "draft-js";
+import { concat, defer, includes, isEmpty, isEqual, without } from "lodash";
 import * as React from "react";
 import { findDOMNode } from "react-dom";
 
 import ElementHelper from "./../../helpers/element-helper";
 import KeyCodes from "./../../helpers/key-codes";
-import BlockToolbar from "./block-toolbar";
-import linkDecorator from "./link-decorator";
-import SelectionToolbar  from "./selection-toolbar";
+import FormulaEditorBlock from "./blocks/formula-editor-block";
+import { linkComponent, linkStrategy } from "./decorators/link-decorator";
+import BlockType from "./model/block-type";
+import EntityType from "./model/entity-type";
+import BlockToolbar from "./toolbars/block-toolbar";
+import SelectionToolbar  from "./toolbars/selection-toolbar";
 
 import { editor } from "./styles/index.scss";
 
 interface IRichEditorState {
     blockRect?: ClientRect;
+    editedEntities?: Array<string>;
     editorRect?: ClientRect;
     editorState?: EditorState;
     selectionRect?: ClientRect;
@@ -25,16 +37,26 @@ export default class RichEditor extends React.Component<IRichEditorProps, IRichE
         super(props);
 
         const compositeDecorator = new CompositeDecorator([
-            linkDecorator,
+            {
+                component: linkComponent,
+                props: {
+                    lockEditor: this.lockEditor.bind(this),
+                    unlockEditor: this.unlockEditor.bind(this),
+                },
+                strategy: linkStrategy,
+            },
         ]);
 
         const editorState = EditorState.createEmpty(compositeDecorator);
 
-        this.state = { editorState };
+        this.state = {
+            editedEntities: [],
+            editorState,
+        };
     }
 
-    public render() {
-        const { blockRect, editorRect, editorState, selectionRect } = this.state;
+    public render(): JSX.Element {
+        const { blockRect, editedEntities, editorRect, editorState, selectionRect } = this.state;
 
         return (
             <div className={editor}>
@@ -53,26 +75,48 @@ export default class RichEditor extends React.Component<IRichEditorProps, IRichE
                 />
 
                 <Editor
+                    blockRendererFn={this.blockRenderer.bind(this)}
+                    editorState={editorState}
                     handleKeyCommand={this.handleKeyCommand.bind(this)}
                     handleReturn={this.handleReturn.bind(this)}
                     onTab={this.handleTab.bind(this)}
-                    editorState={editorState}
                     onChange={this.editorStateChanged.bind(this)}
                     onFocus={this.deferUpdateToolbars.bind(this, editorState)}
                     onBlur={this.deferResetToolbars.bind(this)}
+                    readOnly={!isEmpty(editedEntities)}
                     spellCheck
                 />
             </div>
         );
     }
 
-    protected editorStateChanged(editorState: EditorState) {
+    private lockEditor(entityKey: string) {
+        const { editedEntities } = this.state;
+
+        if (includes(editedEntities, entityKey)) {
+            return;
+        }
+
+        this.setState({ editedEntities: concat(editedEntities, entityKey) });
+    }
+
+    private unlockEditor(entityKey: string) {
+        const { editedEntities } = this.state;
+
+        if (!includes(editedEntities, entityKey)) {
+            return;
+        }
+
+        this.setState({ editedEntities: without(editedEntities, entityKey) });
+    }
+
+    private editorStateChanged(editorState: EditorState) {
         this.setState({ editorState });
 
         this.deferUpdateToolbars(editorState);
     }
 
-    protected updateToolbars(editorState: EditorState) {
+    private updateToolbars(editorState: EditorState) {
         const {
             blockRect: originalBlockRect,
             editorRect: originalEditorRect,
@@ -108,22 +152,22 @@ export default class RichEditor extends React.Component<IRichEditorProps, IRichE
         }
     }
 
-    protected deferUpdateToolbars(editorState: EditorState) {
+    private deferUpdateToolbars(editorState: EditorState) {
         defer(this.updateToolbars.bind(this, editorState));
     }
 
-    protected resetToolbars() {
+    private resetToolbars() {
         this.setState({
             blockRect: null,
             selectionRect: null,
         });
     }
 
-    protected deferResetToolbars() {
+    private deferResetToolbars() {
         defer(this.resetToolbars.bind(this));
     }
 
-    protected getEditBlockNodeRect(editorState: EditorState, editorNode: Element): ClientRect {
+    private getEditBlockNodeRect(editorState: EditorState, editorNode: Element): ClientRect {
         const { anchorNode, focusNode } = window.getSelection();
 
         if (!anchorNode || !focusNode) {
@@ -151,7 +195,7 @@ export default class RichEditor extends React.Component<IRichEditorProps, IRichE
         return ElementHelper.getElementRect(blockElement);
     }
 
-    protected getSelectionRect(editorState: EditorState): ClientRect {
+    private getSelectionRect(editorState: EditorState): ClientRect {
         const selectionState = editorState.getSelection();
 
         if (selectionState.isCollapsed() || selectionState.getStartKey() !== selectionState.getEndKey()) {
@@ -163,7 +207,7 @@ export default class RichEditor extends React.Component<IRichEditorProps, IRichE
         return visibleSelectionRect ? ElementHelper.fromWindowToDocument(visibleSelectionRect) : null;
     }
 
-    protected handleKeyCommand(command: any): boolean {
+    private handleKeyCommand(command: any): boolean {
         const { editorState } = this.state;
         const newState = RichUtils.handleKeyCommand(editorState, command);
 
@@ -176,7 +220,7 @@ export default class RichEditor extends React.Component<IRichEditorProps, IRichE
         return false;
     }
 
-    protected handleReturn(event: React.KeyboardEvent): boolean {
+    private handleReturn(event: React.KeyboardEvent): boolean {
         const { editorState } = this.state;
 
         switch (event.keyCode) {
@@ -194,11 +238,40 @@ export default class RichEditor extends React.Component<IRichEditorProps, IRichE
         }
     }
 
-    protected handleTab(event: SyntheticKeyboardEvent) {
+    private handleTab(event: SyntheticKeyboardEvent) {
         const { editorState } = this.state;
 
         const newState = RichUtils.onTab(event, editorState, 4);
 
         this.editorStateChanged(newState);
+    }
+
+    private blockRenderer(block: ContentBlock) {
+        if (block.getType() === BlockType.atomic) {
+            const firstBlockEntityKey = block.getEntityAt(0);
+            const entity = firstBlockEntityKey ? Entity.get(firstBlockEntityKey) : null;
+            const entityData = entity ? entity.getData() : null;
+            const entityType = entity ? entity.getType() : null;
+
+            switch (entityType) {
+                case EntityType.formula:
+                    return {
+                        component: FormulaEditorBlock,
+                        editable: false,
+                        props: {
+                            entityKey: firstBlockEntityKey,
+                            entityData,
+                            lockEditor: this.lockEditor.bind(this),
+                            unlockEditor: this.unlockEditor.bind(this),
+                        },
+                    };
+
+                default:
+                    return null;
+            }
+
+        }
+
+        return null;
     }
 }

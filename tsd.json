@@ -76,6 +76,9 @@
     },
     "react-mdl/react-mdl.d.ts": {
       "commit": "0c5c7a2d2bd0ce7dcab963a8402a9042749ca2da"
+    },
+    "katex/katex.d.ts": {
+      "commit": "3ced2ed66cbbbadf509f6bbc62db314421aa0611"
     }
   }
 }

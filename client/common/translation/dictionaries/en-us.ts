@@ -2,11 +2,17 @@ export default {
     BlockToolbar: {
         addObject: "Add",
         blockquote: "Quote",
+        formula: "Formula",
         headerOne: "Header 1",
         headerTwo: "Header 2",
         orderedListItem: "Ordered list",
         showBlockFormattingMenu: "Menu",
         unorderedListItem: "Unordered list",
+    },
+
+    FormulaEditorBlock: {
+        remove: "Remove",
+        save: "Save",
     },
 
     SelectionToolbar: {

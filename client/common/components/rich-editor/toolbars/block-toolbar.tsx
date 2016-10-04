@@ -1,11 +1,14 @@
 import * as classNames from "classnames";
-import { EditorState, RichUtils } from "draft-js";
+import { AtomicBlockUtils, EditorState, Entity, RichUtils } from "draft-js";
 import { Cancelable, debounce, isNull, map } from "lodash";
 import * as React from "react";
 import { Icon, Tooltip } from "react-mdl";
 
-import ElementHelper from "./../../helpers/element-helper";
-import translate from "./../../translation";
+import ElementHelper from "./../../../helpers/element-helper";
+import translate from "./../../../translation";
+import BlockType from "./../model/block-type";
+import EntityMutability from "./../model/entity-mutability";
+import EntityType from "./../model/entity-type";
 
 import {
     blockToolbar,
@@ -15,7 +18,7 @@ import {
     selectedToolbarButton,
     toolbarButton,
     toolbarIcon,
-} from "./styles/index.scss";
+} from "./../styles/index.scss";
 
 enum MenuItem {
     AddObject,
@@ -35,11 +38,15 @@ interface IBlockToolbarProps {
 }
 
 const blockStyles: Array<{ iconName?: string, style: string, text?: string, translationKey: string }> = [
-    { style: "header-one", text: "H1", translationKey: "headerOne" },
-    { style: "header-two", text: "H2", translationKey: "headerTwo" },
-    { iconName: "format_list_bulleted", style: "unordered-list-item", translationKey: "unorderedListItem" },
-    { iconName: "format_list_numbered", style: "ordered-list-item", translationKey: "orderedListItem" },
-    { iconName: "format_quote", style: "blockquote", translationKey: "blockquote" },
+    { style: BlockType.headerOne, text: "H1", translationKey: "headerOne" },
+    { style: BlockType.headerTwo, text: "H2", translationKey: "headerTwo" },
+    { iconName: "format_list_bulleted", style: BlockType.unorderedListItem, translationKey: "unorderedListItem" },
+    { iconName: "format_list_numbered", style: BlockType.orderedListItem, translationKey: "orderedListItem" },
+    { iconName: "format_quote", style: BlockType.blockquote, translationKey: "blockquote" },
+];
+
+const blockObjects: Array<{ iconName?: string, text?: string, translationKey: string, type: string }> = [
+    { text: "FX", translationKey: "formula", type: EntityType.formula },
 ];
 
 export default class BlockToolbar extends React.Component<IBlockToolbarProps, IBlockToolbarState> {
@@ -52,7 +59,7 @@ export default class BlockToolbar extends React.Component<IBlockToolbarProps, IB
         };
     }
 
-    public render() {
+    public render(): JSX.Element {
         const { blockRect } = this.props;
 
         if (!blockRect) {
@@ -91,8 +98,47 @@ export default class BlockToolbar extends React.Component<IBlockToolbarProps, IB
         );
     }
 
+    private insertBlock(type: string, blockData: Object, event: React.MouseEvent) {
+        if (event) {
+            event.preventDefault();
+        }
+
+        this.setState({ activeMenu: null });
+
+        const entityKey = Entity.create(type, EntityMutability.immutable, blockData);
+
+        const { editorState, updateEditorState } = this.props;
+
+        updateEditorState(AtomicBlockUtils.insertAtomicBlock(editorState, entityKey, " "));
+    }
+
     private buildAddObjectMenu(): Array<JSX.Element> {
-        return null;
+        return map(blockObjects, blockObject => (
+            <Tooltip
+                key={blockObject.type}
+                className={toolbarButton}
+                label={translate("BlockToolbar", blockObject.translationKey)}
+                position="bottom"
+                onMouseDown={this.insertBlock.bind(this, blockObject.type, null)}
+            >
+                {blockObject.iconName
+                    ? <Icon name={blockObject.iconName} />
+                    : blockObject.text
+                }
+            </Tooltip>
+        ));
+    }
+
+    private setBlockStyle(blockStyle: string, event: React.MouseEvent) {
+        if (event) {
+            event.preventDefault();
+        }
+
+        const { editorState, updateEditorState } = this.props;
+
+        this.setState({ activeMenu: null });
+
+        updateEditorState(RichUtils.toggleBlockType(editorState, blockStyle));
     }
 
     private buildBlockSyntaxMenu(): Array<JSX.Element> {
@@ -106,7 +152,7 @@ export default class BlockToolbar extends React.Component<IBlockToolbarProps, IB
                 className={classNames(toolbarButton, { [selectedToolbarButton]: blockStyle.style === blockType})}
                 label={translate("BlockToolbar", blockStyle.translationKey)}
                 position="bottom"
-                onMouseDown={this.getBlockStyleHandler.bind(this, blockStyle.style)}
+                onMouseDown={this.setBlockStyle.bind(this, blockStyle.style)}
             >
                 {blockStyle.iconName
                     ? <Icon name={blockStyle.iconName} />
@@ -114,16 +160,6 @@ export default class BlockToolbar extends React.Component<IBlockToolbarProps, IB
                 }
             </Tooltip>
         ));
-    }
-
-    private getBlockStyleHandler(blockStyle: string, event: React.MouseEvent) {
-        event.preventDefault();
-
-        const { editorState, updateEditorState } = this.props;
-
-        this.setState({ activeMenu: null });
-
-        updateEditorState(RichUtils.toggleBlockType(editorState, blockStyle));
     }
 
     private updateSelectedMenuItem(menuItem: MenuItem, activeMenu: MenuItem) {
