@@ -1,9 +1,7 @@
 import {
     CompositeDecorator,
-    ContentBlock,
     Editor,
     EditorState,
-    Entity,
     RichUtils,
     getVisibleSelectionRect,
 } from "draft-js";
@@ -13,10 +11,8 @@ import { findDOMNode } from "react-dom";
 
 import ElementHelper from "./../../helpers/element-helper";
 import KeyCodes from "./../../helpers/key-codes";
-import FormulaEditorBlock from "./blocks/formula-editor-block";
+import { formulaComponent, formulaStrategy } from "./decorators/formula-decorator";
 import { linkComponent, linkStrategy } from "./decorators/link-decorator";
-import BlockType from "./model/block-type";
-import EntityType from "./model/entity-type";
 import BlockToolbar from "./toolbars/block-toolbar";
 import SelectionToolbar  from "./toolbars/selection-toolbar";
 
@@ -44,6 +40,14 @@ export default class RichEditor extends React.Component<IRichEditorProps, IRichE
                     unlockEditor: this.unlockEditor.bind(this),
                 },
                 strategy: linkStrategy,
+            },
+            {
+                component: formulaComponent,
+                props: {
+                    lockEditor: this.lockEditor.bind(this),
+                    unlockEditor: this.unlockEditor.bind(this),
+                },
+                strategy: formulaStrategy,
             },
         ]);
 
@@ -75,7 +79,6 @@ export default class RichEditor extends React.Component<IRichEditorProps, IRichE
                 />
 
                 <Editor
-                    blockRendererFn={this.blockRenderer.bind(this)}
                     editorState={editorState}
                     handleKeyCommand={this.handleKeyCommand.bind(this)}
                     handleReturn={this.handleReturn.bind(this)}
@@ -244,34 +247,5 @@ export default class RichEditor extends React.Component<IRichEditorProps, IRichE
         const newState = RichUtils.onTab(event, editorState, 4);
 
         this.editorStateChanged(newState);
-    }
-
-    private blockRenderer(block: ContentBlock) {
-        if (block.getType() === BlockType.atomic) {
-            const firstBlockEntityKey = block.getEntityAt(0);
-            const entity = firstBlockEntityKey ? Entity.get(firstBlockEntityKey) : null;
-            const entityData = entity ? entity.getData() : null;
-            const entityType = entity ? entity.getType() : null;
-
-            switch (entityType) {
-                case EntityType.formula:
-                    return {
-                        component: FormulaEditorBlock,
-                        editable: false,
-                        props: {
-                            entityKey: firstBlockEntityKey,
-                            entityData,
-                            lockEditor: this.lockEditor.bind(this),
-                            unlockEditor: this.unlockEditor.bind(this),
-                        },
-                    };
-
-                default:
-                    return null;
-            }
-
-        }
-
-        return null;
     }
 }

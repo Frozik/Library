@@ -10,8 +10,11 @@ export default {
         unorderedListItem: "Unordered list",
     },
 
-    FormulaEditorBlock: {
-        remove: "Remove",
+    FormulaDecorator: {
+        cancel: "Cancel",
+        empty: "Click to start editing",
+        invalid: "Formula text is invalid",
+        placeholder: "Start write formula",
         save: "Save",
     },
 

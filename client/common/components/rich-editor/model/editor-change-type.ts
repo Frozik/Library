@@ -15,8 +15,6 @@ type EditorChangeType = (
     "undo"
 );
 
-
-
 export default {
     adjustDepth: "adjust-depth" as EditorChangeType,
     applyEntity: "apply-entity" as EditorChangeType,
@@ -33,4 +31,3 @@ export default {
     splitBlock: "split-block" as EditorChangeType,
     undo: "undo" as EditorChangeType,
 };
-

@@ -1,5 +1,5 @@
 import * as classNames from "classnames";
-import { AtomicBlockUtils, EditorState, Entity, RichUtils } from "draft-js";
+import { EditorState, Entity, Modifier, RichUtils } from "draft-js";
 import { Cancelable, debounce, isNull, map } from "lodash";
 import * as React from "react";
 import { Icon, Tooltip } from "react-mdl";
@@ -7,6 +7,8 @@ import { Icon, Tooltip } from "react-mdl";
 import ElementHelper from "./../../../helpers/element-helper";
 import translate from "./../../../translation";
 import BlockType from "./../model/block-type";
+import IDecoratorFormulaData from "./../model/decorator-formula-data";
+import EditorChangeType from "./../model/editor-change-type";
 import EntityMutability from "./../model/entity-mutability";
 import EntityType from "./../model/entity-type";
 
@@ -98,18 +100,22 @@ export default class BlockToolbar extends React.Component<IBlockToolbarProps, IB
         );
     }
 
-    private insertBlock(type: string, blockData: Object, event: React.MouseEvent) {
+    private insertEntity(type: string, blockData: IDecoratorFormulaData, event: React.MouseEvent) {
         if (event) {
             event.preventDefault();
         }
 
         this.setState({ activeMenu: null });
 
-        const entityKey = Entity.create(type, EntityMutability.immutable, blockData);
-
         const { editorState, updateEditorState } = this.props;
+        const contentState = editorState.getCurrentContent();
+        const selectionState = editorState.getSelection();
+        const entityKey = Entity.create(type, EntityMutability.immutable, blockData);
+        const firstBlank = Modifier.insertText(contentState, selectionState, " ", null, null);
+        const withEntity = Modifier.insertText(firstBlank, selectionState, " ", null, entityKey);
+        const withBlank = Modifier.insertText(withEntity, selectionState, " ", null, null);
 
-        updateEditorState(AtomicBlockUtils.insertAtomicBlock(editorState, entityKey, " "));
+        updateEditorState(EditorState.push(editorState, withBlank, EditorChangeType.insertCharacters));
     }
 
     private buildAddObjectMenu(): Array<JSX.Element> {
@@ -119,7 +125,7 @@ export default class BlockToolbar extends React.Component<IBlockToolbarProps, IB
                 className={toolbarButton}
                 label={translate("BlockToolbar", blockObject.translationKey)}
                 position="bottom"
-                onMouseDown={this.insertBlock.bind(this, blockObject.type, null)}
+                onMouseDown={this.insertEntity.bind(this, blockObject.type, { text: "" })}
             >
                 {blockObject.iconName
                     ? <Icon name={blockObject.iconName} />

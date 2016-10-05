@@ -11,7 +11,7 @@ $input-margin: 2px;
 $blur-input-background: $color_grey_300;
 $focus-input-background: $color_grey_50;
 
-:local .editor {
+.editor {
     min-width: 600px;
     padding: 0 0 0 calc($button-size * 2);
     
@@ -23,13 +23,13 @@ $focus-input-background: $color_grey_50;
         background: $field-color;
     }
 
-    :local .selectionToolbar {
+    .selectionToolbar {
         position: absolute;
         z-index: 9999;
         cursor: default;
         background: $button-color;
 
-        :local .toolbarButton {
+        .toolbarButton {
             height: $button-size;
             width: $button-size;
             max-width: $button-size;
@@ -41,15 +41,15 @@ $focus-input-background: $color_grey_50;
             }
         }
 
-        :local .selectedToolbarButton {
+        .selectedToolbarButton {
             background: $button-selected-color;
         }
 
-        :local .disabledToolbarButton {
+        .disabledToolbarButton {
             background: $button-disabled-color;
         }
 
-        :local .actionInput {
+        .actionInput {
             float: left;
             
             height: calc($button-size - 2 * $input-margin);
@@ -66,17 +66,17 @@ $focus-input-background: $color_grey_50;
         }
     }
 
-    :local .blockToolbar {
+    .blockToolbar {
         position: absolute;
         cursor: default;
 
         background: $button-color;
 
-        :local .toolbarIcon {
+        .toolbarIcon {
             font-size: $button-size;
         }
 
-        :local .toolbarButton {
+        .toolbarButton {
             height: $button-size;
             width: $button-size;
 
@@ -90,11 +90,11 @@ $focus-input-background: $color_grey_50;
             }
         }
 
-        :local .selectedToolbarButton {
+        .selectedToolbarButton {
             background: $button-selected-color;
         }
 
-        :local .expandBox {
+        .expandBox {
             position: absolute;
 
             display: flex;
@@ -106,12 +106,12 @@ $focus-input-background: $color_grey_50;
             background: $button-color;
         }
 
-        :local .highlighted {
+        .highlighted {
             background: $button-selected-color;
         }
     }
 
-    :local .hidden {
+    .hidden {
         visibility: hidden;
     }
 

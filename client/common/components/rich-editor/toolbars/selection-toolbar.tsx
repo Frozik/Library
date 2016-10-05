@@ -8,7 +8,7 @@ import ElementHelper from "./../../../helpers/element-helper";
 import KeyCodes from "./../../../helpers/key-codes";
 import translate from "./../../../translation";
 import Action from "./../model/action";
-import IActionLinkData from "./../model/action-link-data";
+import IDecoratorLinkData from "./../model/decorator-link-data";
 import EntityMutability from "./../model/entity-mutability";
 import EntityType from "./../model/entity-type";
 
@@ -138,7 +138,7 @@ export default class SelectionToolbar extends React.Component<ISelectionToolbarP
         updateEditorState(RichUtils.toggleInlineStyle(editorState, inlineStyle));
     }
 
-    private setAction(action: Action, data: IActionLinkData, event: React.MouseEvent = null) {
+    private setAction(action: Action, data: IDecoratorLinkData, event: React.MouseEvent = null) {
         if (event) {
             event.preventDefault();
         }
@@ -214,7 +214,7 @@ export default class SelectionToolbar extends React.Component<ISelectionToolbarP
             }
 
             const entity = Entity.get(entityKey);
-            const { url = null }: IActionLinkData = entity.getData();
+            const { url = null }: IDecoratorLinkData = entity.getData();
 
             if (entity.getType() === EntityType.link && !isNull(url) && !includes(links, url)) {
                 links.push(url);

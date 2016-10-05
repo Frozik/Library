@@ -1,0 +1,72 @@
+@import './../../../colors.scss';
+
+.container {
+    display: inline-block;
+
+    background: $color_teal_50;
+
+    &.editMode {
+        display: block;
+
+        padding: 20px;
+    }
+
+    &:hover {
+        background: $color_teal_100;
+    }
+
+    .formula {
+        display: inline-block;
+
+        padding: 5px;
+
+        &.editMode {
+            display: block;
+
+            background: $color_grey_50;
+        }
+    }
+
+    .invalid {
+        display: block;
+
+        padding: 5px;
+
+        background: $color_red_500;
+    }
+
+    .editorContainer {
+        padding-top: 20px;
+
+        max-width: 600px;
+
+        .input {
+            width: 100%;
+
+            margin: 0;
+            padding: 0;
+
+            border: 0;
+
+            resize: none;
+        }
+
+        .buttonsContainer {
+            text-align: right;
+
+            .buttonAction {
+                margin: 10px 0 0 20px;
+                padding: 0;
+
+                color: $color_teal_900;
+                border: 0;
+                background: transparent;
+
+                &.inactive {
+                    color: $color_grey_500;
+                }
+            }
+        }
+    }
+}
+
