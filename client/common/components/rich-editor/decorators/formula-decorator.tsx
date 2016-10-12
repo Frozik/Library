@@ -46,6 +46,7 @@ class Formula extends React.Component<IDecoratorProps, ILinkState> {
 
         return (
             <div
+                contentEditable={false}
                 className={classnames(container, { [editMode]: isInEditState })}
                 onClick={!isInEditState && this.toggleEditState.bind(this)}
             >
