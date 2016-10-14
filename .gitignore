@@ -6,3 +6,5 @@
 /typings*
 !/wwwroot
 /wwwroot*
+!/npm-debug*
+/npm-debug*
