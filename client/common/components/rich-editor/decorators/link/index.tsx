@@ -2,10 +2,10 @@ import { ContentBlock, Entity } from "draft-js";
 import { isNull } from "lodash";
 import * as React from "react";
 
-import IDecoratorLinkData from "./../model/decorator-link-data";
-import IDecoratorProps from "./../model/decorator-props";
-import StrategyCallBackType from "./../model/decorator-strategy-callback";
-import EntityType from "./../model/entity-type";
+import IDecoratorLinkData from "./../../model/decorator-link-data";
+import IDecoratorProps from "./../../model/decorator-props";
+import StrategyCallBackType from "./../../model/decorator-strategy-callback";
+import EntityType from "./../../model/entity-type";
 
 interface ILinkState {}
 

@@ -1,0 +1,46 @@
+@import './../../styles/variables.scss';
+
+.blockToolbar {
+    position: absolute;
+    cursor: default;
+
+    background: $button-color;
+
+    .toolbarIcon {
+        font-size: $button-size;
+    }
+
+    .toolbarButton {
+        height: $button-size;
+        width: $button-size;
+
+        text-align: center;
+        line-height: $button-size;
+
+        background: $button-color;
+
+        i {
+            font-size: $button-size;
+        }
+    }
+
+    .selectedToolbarButton {
+        background: $button-selected-color;
+    }
+
+    .expandBox {
+        position: absolute;
+
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+
+        width: calc($button-size * 2);
+
+        background: $button-color;
+    }
+
+    .highlighted {
+        background: $button-selected-color;
+    }
+}

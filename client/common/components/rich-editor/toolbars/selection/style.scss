@@ -1,0 +1,44 @@
+@import './../../styles/variables.scss';
+
+.selectionToolbar {
+    position: absolute;
+    z-index: 9999;
+    cursor: default;
+    background: $button-color;
+
+    .toolbarButton {
+        height: $button-size;
+        width: $button-size;
+        max-width: $button-size;
+
+        background: $button-color;
+
+        i {
+            font-size: $button-size;
+        }
+    }
+
+    .selectedToolbarButton {
+        background: $button-selected-color;
+    }
+
+    .disabledToolbarButton {
+        background: $button-disabled-color;
+    }
+
+    .actionInput {
+        float: left;
+        
+        height: calc($button-size - 2 * $input-margin);
+        margin: $input-margin;
+        padding: 0 calc($block-padding / 2);
+
+        border: 0;
+        background: $blur-input-background;
+
+        &:focus {
+            outline: none;
+            background: $focus-input-background; 
+        }
+    }
+}

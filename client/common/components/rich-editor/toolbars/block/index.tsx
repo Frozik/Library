@@ -4,23 +4,23 @@ import { Cancelable, debounce, isNull, map } from "lodash";
 import * as React from "react";
 import { Icon, Tooltip } from "react-mdl";
 
-import ElementHelper from "./../../../helpers/element-helper";
-import translate from "./../../../translation";
-import BlockType from "./../model/block-type";
-import IDecoratorFormulaData from "./../model/decorator-formula-data";
-import EditorChangeType from "./../model/editor-change-type";
-import EntityMutability from "./../model/entity-mutability";
-import EntityType from "./../model/entity-type";
+import ElementHelper from "./../../../../helpers/element-helper";
+import translate from "./../../../../translation";
+import BlockType from "./../../model/block-type";
+import IDecoratorFormulaData from "./../../model/decorator-formula-data";
+import EditorChangeType from "./../../model/editor-change-type";
+import EntityMutability from "./../../model/entity-mutability";
+import EntityType from "./../../model/entity-type";
 
+import { hidden } from "./../../styles/common.scss";
 import {
     blockToolbar,
     expandBox,
-    hidden,
     highlighted,
     selectedToolbarButton,
     toolbarButton,
     toolbarIcon,
-} from "./../styles/index.scss";
+} from "./style.scss";
 
 enum MenuItem {
     AddObject,

@@ -4,12 +4,12 @@ import * as katex from "katex";
 import { isNull } from "lodash";
 import * as React from "react";
 
-import ElementHelper from "./../../../helpers/element-helper";
-import translate from "./../../../translation";
-import IDecoratorFormulaData from "./../model/decorator-formula-data";
-import IDecoratorProps from "./../model/decorator-props";
-import StrategyCallBackType from "./../model/decorator-strategy-callback";
-import EntityType from "./../model/entity-type";
+import ElementHelper from "./../../../../helpers/element-helper";
+import translate from "./../../../../translation";
+import IDecoratorFormulaData from "./../../model/decorator-formula-data";
+import IDecoratorProps from "./../../model/decorator-props";
+import StrategyCallBackType from "./../../model/decorator-strategy-callback";
+import EntityType from "./../../model/entity-type";
 
 import {
     buttonAction,
@@ -21,7 +21,7 @@ import {
     inactive,
     input,
     invalid,
-} from "./../styles/formula-decorator.scss";
+} from "./style.scss";
 
 interface ILinkState {
     text?: string;

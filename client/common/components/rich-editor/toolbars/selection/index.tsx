@@ -4,13 +4,13 @@ import { first, includes, isEmpty, isNull, map } from "lodash";
 import * as React from "react";
 import { Icon, Tooltip } from "react-mdl";
 
-import ElementHelper from "./../../../helpers/element-helper";
-import KeyCodes from "./../../../helpers/key-codes";
-import translate from "./../../../translation";
-import Action from "./../model/action";
-import IDecoratorLinkData from "./../model/decorator-link-data";
-import EntityMutability from "./../model/entity-mutability";
-import EntityType from "./../model/entity-type";
+import ElementHelper from "./../../../../helpers/element-helper";
+import KeyCodes from "./../../../../helpers/key-codes";
+import translate from "./../../../../translation";
+import Action from "./../../model/action";
+import IDecoratorLinkData from "./../../model/decorator-link-data";
+import EntityMutability from "./../../model/entity-mutability";
+import EntityType from "./../../model/entity-type";
 
 import {
     actionInput,
@@ -18,7 +18,7 @@ import {
     selectedToolbarButton,
     selectionToolbar,
     toolbarButton,
-} from "./../styles/index.scss";
+} from "./style.scss";
 
 interface ISelectionToolbarState {
     action?: Action;

@@ -11,10 +11,10 @@ import { findDOMNode } from "react-dom";
 
 import ElementHelper from "./../../helpers/element-helper";
 import KeyCodes from "./../../helpers/key-codes";
-import { formulaComponent, formulaStrategy } from "./decorators/formula-decorator";
-import { linkComponent, linkStrategy } from "./decorators/link-decorator";
-import BlockToolbar from "./toolbars/block-toolbar";
-import SelectionToolbar  from "./toolbars/selection-toolbar";
+import { formulaComponent, formulaStrategy } from "./decorators/formula";
+import { linkComponent, linkStrategy } from "./decorators/link";
+import BlockToolbar from "./toolbars/block";
+import SelectionToolbar  from "./toolbars/selection";
 
 import { editor } from "./styles/index.scss";
 
